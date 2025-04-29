@@ -1,0 +1,17 @@
+{
+    "personalities": [
+        "Witty", "Reserved", "Proud", "Cheerful", "Sensible",
+        "Romantic", "Practical", "Passionate", "Mysterious",
+        "Spirited", "Gentle", "Ambitious", "Intellectual"
+    ],
+    "male_status": [
+        "Wealthy Duke", "Earl of Distinguished Family", "Country Gentleman",
+        "Naval Captain", "Distinguished Colonel", "Wealthy Merchant",
+        "Respected Clergyman", "Rising Barrister", "Foreign Nobleman"
+    ],
+    "female_status": [
+        "Duke's Daughter", "Lady of Noble Birth", "Wealthy Heiress",
+        "Gentleman's Daughter", "Accomplished Governess", "Merchant's Daughter",
+        "Clergyman's Daughter", "Country Lady", "Distinguished Lady of Fashion"
+    ]
+}

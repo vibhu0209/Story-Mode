@@ -1,0 +1,14 @@
+
+
+{
+    "twists": [
+        "A scandalous letter reveals that {hero[name]} has a secret past...",
+        "Society gossip threatens to tear {heroine[name]}'s reputation apart...",
+        "A rival for {hero[name]}'s affections appears at the county ball..."
+    ],
+    "resolutions": [
+        "Through understanding and growth, {heroine[name]} and {hero[name]} find their way to each other...",
+        "After overcoming their pride and prejudices, true love prevails...",
+        "Society's expectations are defied as they choose love over convention..."
+    ]
+}
