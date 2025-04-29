@@ -86,7 +86,7 @@ class AustenStoryCreator:
 
     def create_gui(self):
         # Create themed window
-        self.root = ThemedTk(theme="arc")
+        self.root = ThemedTk(theme="clearlooks")
         self.root.title("📚 The Austen Experience")
         self.root.geometry("1200x800")
         
@@ -288,11 +288,33 @@ class AustenStoryCreator:
         theme_frame.pack(fill=tk.X, pady=5)
         
         ttk.Label(theme_frame, text="Application Theme:").grid(row=0, column=0, padx=5, pady=5, sticky="w")
-        self.app_theme = tk.StringVar(value="arc")
+        self.app_theme = tk.StringVar(value="clearlooks")
         theme_combo = ttk.Combobox(theme_frame, textvariable=self.app_theme,
-                                 values=["arc", "equilux", "clearlooks", "adapta"])
+                                 values=["clearlooks", "equilux", "adapta", "arc"])
         theme_combo.grid(row=0, column=1, padx=5, pady=5)
         theme_combo.bind('<<ComboboxSelected>>', self.update_theme)
+        
+        # Custom styling for adapta theme
+        self.adapta_colors = {
+            "primary": "#FF6B6B",  # Coral red
+            "secondary": "#4ECDC4",  # Turquoise
+            "accent": "#FFD166",  # Yellow
+            "background": "#FFFFFF",  # Pure white background
+            "text": "#000000",  # Black text for maximum contrast
+            "button_bg": "#4ECDC4",  # Turquoise for button background
+            "button_text": "#000000",  # Black text for buttons
+            "button_hover": "#FFD166",  # Yellow hover state
+            "button_hover_text": "#000000",  # Black text for button hover
+            "tab_bg": "#4ECDC4",  # Turquoise
+            "tab_selected": "#FFD166",  # Yellow
+            "tab_text": "#000000",  # Black text for tabs
+            "combo_bg": "#FFFFFF",  # White background for combo
+            "combo_text": "#000000",  # Black text for combo
+            "scale_bg": "#4ECDC4",  # Turquoise
+            "check_bg": "#FFFFFF",  # White background
+            "check_text": "#000000",  # Black text
+            "label_frame_text": "#000000"  # Black text for frame labels
+        }
         
         # Audio Settings
         audio_frame = ttk.LabelFrame(settings_container, text="Audio Settings", padding=10)
@@ -447,6 +469,102 @@ Clear:
     def update_theme(self, event=None):
         theme = self.app_theme.get()
         self.root.set_theme(theme)
+        
+        style = ttk.Style()
+        
+        # Reset all styles to default first
+        style.theme_use(theme)
+        
+        # Apply custom styling ONLY for adapta theme
+        if theme == "adapta":
+            # Configure base styles with strong contrast
+            style.configure("TFrame", 
+                          background=self.adapta_colors["background"])
+            
+            # Configure labels with dark text
+            style.configure("TLabel", 
+                          background=self.adapta_colors["background"],
+                          foreground=self.adapta_colors["text"],
+                          font=("Comic Sans MS", 11, "bold"))
+            
+            # Configure LabelFrame with dark text
+            style.configure("TLabelframe",
+                          background=self.adapta_colors["background"])
+            style.configure("TLabelframe.Label",
+                          foreground=self.adapta_colors["label_frame_text"],
+                          background=self.adapta_colors["background"],
+                          font=("Comic Sans MS", 11, "bold"))
+            
+            # Configure buttons with hover effect and visible text
+            style.configure("TButton",
+                          background=self.adapta_colors["button_bg"],
+                          foreground=self.adapta_colors["button_text"],
+                          font=("Comic Sans MS", 11, "bold"),
+                          padding=10)
+            style.map("TButton",
+                     background=[("active", self.adapta_colors["button_hover"]),
+                               ("pressed", self.adapta_colors["button_hover"])],
+                     foreground=[("active", self.adapta_colors["button_hover_text"]),
+                               ("pressed", self.adapta_colors["button_hover_text"])])
+            
+            # Configure comboboxes with white background and black text
+            style.configure("TCombobox",
+                          background=self.adapta_colors["combo_bg"],
+                          foreground=self.adapta_colors["combo_text"],
+                          selectbackground=self.adapta_colors["accent"],
+                          selectforeground=self.adapta_colors["text"],
+                          fieldbackground=self.adapta_colors["combo_bg"],
+                          font=("Comic Sans MS", 10))
+            
+            # Configure checkbuttons with dark text
+            style.configure("TCheckbutton",
+                          background=self.adapta_colors["check_bg"],
+                          foreground=self.adapta_colors["check_text"],
+                          font=("Comic Sans MS", 11))
+            
+            # Configure scales with contrasting colors
+            style.configure("Horizontal.TScale",
+                          background=self.adapta_colors["background"],
+                          troughcolor=self.adapta_colors["scale_bg"])
+            
+            # Configure notebook and tabs
+            style.configure("TNotebook",
+                          background=self.adapta_colors["background"])
+            
+            style.configure("TNotebook.Tab",
+                          background=self.adapta_colors["tab_bg"],
+                          foreground=self.adapta_colors["tab_text"],
+                          padding=[10, 5],
+                          font=("Comic Sans MS", 11, "bold"))
+            
+            style.map("TNotebook.Tab",
+                     background=[("selected", self.adapta_colors["tab_selected"])],
+                     foreground=[("selected", self.adapta_colors["tab_text"])])
+            
+            # Configure entry fields with white background and black text
+            style.configure("TEntry",
+                          fieldbackground=self.adapta_colors["combo_bg"],
+                          foreground=self.adapta_colors["combo_text"],
+                          font=("Comic Sans MS", 10))
+            
+            # Configure scrollbars
+            style.configure("Vertical.TScrollbar",
+                          background=self.adapta_colors["tab_bg"],
+                          troughcolor=self.adapta_colors["background"],
+                          arrowcolor=self.adapta_colors["text"])
+            
+            style.configure("Horizontal.TScrollbar",
+                          background=self.adapta_colors["tab_bg"],
+                          troughcolor=self.adapta_colors["background"],
+                          arrowcolor=self.adapta_colors["text"])
+        else:
+            # For other themes, use their default styles
+            style.configure("TLabel", font=("Helvetica", 10))
+            style.configure("TButton", font=("Helvetica", 10))
+            style.configure("TCheckbutton", font=("Helvetica", 10))
+            style.configure("TCombobox", font=("Helvetica", 10))
+            style.configure("TNotebook.Tab", font=("Helvetica", 10))
+            style.configure("TLabelframe.Label", font=("Helvetica", 10))
 
     def update_voice_speed(self, value):
         if self.current_engine:
